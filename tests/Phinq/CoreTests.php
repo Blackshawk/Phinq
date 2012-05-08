@@ -387,6 +387,27 @@ class CoreTests extends \PHPUnit_Framework_TestCase {
 			return $value !== null;
 		}));
 	}
+	
+	public function testRandom() {
+		$collection = array(array(	'name'	=> 'John Smith',
+									'age'	=>	35),
+							array(	'name'	=>	'Jane Smith',
+									'age'	=>	32),
+							array(	'name'	=>	'Bobby Smith',
+									'age'	=>	9),
+							array(	'name'	=>	'Tina Smith',
+									'age'	=>	5));
+		
+		$result1 = Phinq::_($collection)->random()->toArray();
+		$result3 = Phinq::_($collection)->random(3)->toArray();
+		
+		$this->assertCount(1, $result1);
+		$this->assertCount(3, $result3);
+	}
+	
+	/* public function testRandomWithKeys() {
+		
+	} */
 
 	public function testContainsAndDefaultEqualityComparer() {
 		$obj = new stdClass();

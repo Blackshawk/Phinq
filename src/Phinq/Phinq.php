@@ -818,6 +818,17 @@ class Phinq implements IteratorAggregate
 		$this->addToQueue(new BetweenQuery($lowerBound, $upperBound));
 		return $this->getThisOrCastDown();
 	}
+	
+	/**
+	 * 
+	 * @param int $randomElementsCount
+	 * @return Phinq
+	 */
+	public function random($randomElementsCount = 1)
+	{
+		$this->addToQueue(new RandomQuery($randomElementsCount));
+		return $this->getThisOrCastDown();
+	}
 
 	/**
 	 * Applies a lambda function to each element

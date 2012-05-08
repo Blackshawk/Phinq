@@ -205,6 +205,8 @@ people
 
 Extra methods:
 
+* `between()`
+* `none()`
 * `walk()` 
 
 LINQ methods to be implemented: None.
