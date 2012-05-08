@@ -11,74 +11,13 @@ originally written by Tommy Montgomery
 
 * PHP 5.3 or higher
 
-## LINQ methods implemented:
-
-* `Aggregate()`
-* `All()`
-* `Any()`
-* `Average()`
-* `Cast()`
-* `Concat()`
-* `Contains()`
-* `Count()`
-* `DefaultIfEmpty()`
-* `Distinct()`
-* `ElementAt()`
-* `ElementAtOrDefault()`
-* `Except()`
-* `First()`
-* `FirstOrDefault()`
-* `GroupBy()`
-* `GroupJoin()`
-* `Intersect()`
-* `Join()`
-* `Last()`
-* `LastOrDefault()`
-* `Max()`
-* `Min()`
-* `OfType()`
-* `OrderBy()`
-* `Reverse()`
-* `Select()`
-* `SelectMany()`
-* `SequenceEqual()`
-* `Single()`
-* `SingleOrDefault()`
-* `Skip()`
-* `SkipWhile()`
-* `Sum()`
-* `Take()`
-* `TakeWhile()`
-* `ThenBy()`
-* `ToArray()`
-* `ToDictionary()`
-* `Union()`
-* `Where()`
-* `Zip()` 
-
-Extra methods:
-
-* `walk()` 
-
-LINQ methods to be implemented: None.
-
-LINQ methods not implemented:
-
-* `AsEnumerable()`
-* `AsParallel()`
-* `AsQueryable()`
-* `LongCount()`
-* `OrderByDescending()` - implemented as an optional argument to orderBy()
-* `ThenByDescending()` - implemented as an optional argument to thenBy()
-* `ToList()`
-* `ToLookup()` 
-
 ## Examples
 
 ### Basic Usage
 ```php
-//bootstrap the library, it of course uses autoload because it's not 1998 anymore
-require_once 'Phinq/bootstrap.php';
+<?php
+
+//Use a PSR-0 compliant autoloader to auto-import needed files
 
 //fully qualifying things sucks
 use Phinq\Phinq;
@@ -120,6 +59,8 @@ Array
 
 ### Grouping using objects
 ```php
+<?php
+
 //say we had a Person struct, and each person has a place of residence
 class Person {
   public $id;
@@ -215,3 +156,67 @@ people
     );
   });
 ```
+
+
+## LINQ methods implemented:
+
+* `Aggregate()`
+* `All()`
+* `Any()`
+* `Average()`
+* `Cast()`
+* `Concat()`
+* `Contains()`
+* `Count()`
+* `DefaultIfEmpty()`
+* `Distinct()`
+* `ElementAt()`
+* `ElementAtOrDefault()`
+* `Except()`
+* `First()`
+* `FirstOrDefault()`
+* `GroupBy()`
+* `GroupJoin()`
+* `Intersect()`
+* `Join()`
+* `Last()`
+* `LastOrDefault()`
+* `Max()`
+* `Min()`
+* `OfType()`
+* `OrderBy()`
+* `Reverse()`
+* `Select()`
+* `SelectMany()`
+* `SequenceEqual()`
+* `Single()`
+* `SingleOrDefault()`
+* `Skip()`
+* `SkipWhile()`
+* `Sum()`
+* `Take()`
+* `TakeWhile()`
+* `ThenBy()`
+* `ToArray()`
+* `ToDictionary()`
+* `Union()`
+* `Where()`
+* `Zip()` 
+
+Extra methods:
+
+* `walk()` 
+
+LINQ methods to be implemented: None.
+
+LINQ methods not implemented:
+
+* `AsEnumerable()`
+* `AsParallel()`
+* `AsQueryable()`
+* `LongCount()`
+* `OrderByDescending()` - implemented as an optional argument to orderBy()
+* `ThenByDescending()` - implemented as an optional argument to thenBy()
+* `ToList()`
+* `ToLookup()` 
+
