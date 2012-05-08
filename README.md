@@ -207,6 +207,7 @@ Extra methods:
 
 * `between()`
 * `none()`
+* `random()` 
 * `walk()` 
 
 LINQ methods to be implemented: None.
