@@ -1,7 +1,21 @@
 {
-    "name": "Blackshawk/Phinq",
-    
-    "require":{
-        "php": ">=5.3.0"
-    }
+	"name": "Blackshawk/Phinq",
+	"type": "library",
+	"require": {
+        	"php": ">=5.3.0"
+	},
+	"homepage": "https://github.com/Blackshawk/phinq",
+	"authors": [
+		{
+			"name": "Tommy Montgomery"
+		}
+	],
+
+	"autoload": {
+		"psr-0": {
+			"phinq": "src"
+		}
+	},
+
+	"description": "A library for providing querying and updating data in an object-oriented fashion."
 }
