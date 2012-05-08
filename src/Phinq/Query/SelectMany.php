@@ -1,8 +1,8 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class SelectManyQuery extends LambdaDrivenQuery
+class SelectMany extends LambdaDriven
 {
 	public function execute(array $collection)
 	{
@@ -10,7 +10,7 @@ class SelectManyQuery extends LambdaDrivenQuery
 		$lambda = $this->getLambdaExpression();
 
 		array_walk($collection, function($value, $key) use (&$flattenedCollection, $lambda) {
-			$flattenedCollection = array_merge($flattenedCollection, Util::nonRecursiveFlatten($lambda($value)));
+			$flattenedCollection = array_merge($flattenedCollection, \Phinq\Util::nonRecursiveFlatten($lambda($value)));
 		});
 
 		return $flattenedCollection;

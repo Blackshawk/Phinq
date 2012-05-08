@@ -1,8 +1,8 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class SelectQuery extends LambdaDrivenQuery
+class Select extends LambdaDriven
 {
 	public function execute(array $collection)
 	{

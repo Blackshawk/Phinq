@@ -1,8 +1,10 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class OfTypeQuery implements Query
+use Phinq\Query;
+
+class OfType implements Query
 {
 
 	protected $type;

@@ -3,6 +3,7 @@
 namespace Phinq;
 
 use Closure;
+use Phinq\Query\ThenBy;
 
 class OrderedPhinq extends Phinq
 {
@@ -24,7 +25,7 @@ class OrderedPhinq extends Phinq
 	 */
 	public function thenBy(Closure $lambda, $descending = false)
 	{
-		$this->addToQueue(new ThenByQuery($this->getLastQuery(), $lambda, $descending));
+		$this->addToQueue(new ThenBy($this->getLastQuery(), $lambda, $descending));
 		return $this;
 	}
 }

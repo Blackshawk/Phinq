@@ -1,10 +1,11 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
+use Phinq\Query;
 use Closure;
 
-class ZipQuery implements Query
+class Zip implements Query
 {
 	protected $collectionToMerge;
 	protected $resultSelector;

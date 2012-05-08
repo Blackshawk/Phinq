@@ -1,8 +1,10 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class DefaultIfEmptyQuery implements Query
+use Phinq\Query;
+
+class DefaultIfEmpty implements Query
 {
 	protected $defaultValue;
 

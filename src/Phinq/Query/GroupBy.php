@@ -1,10 +1,12 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
 use Closure;
+use Phinq\Grouping;
+use Phinq\GroupingDictionary;
 
-class GroupByQuery extends LambdaDrivenQuery
+class GroupBy extends LambdaDriven
 {
 	public function execute(array $collection)
 	{

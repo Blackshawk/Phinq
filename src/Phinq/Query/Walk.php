@@ -1,8 +1,8 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class WalkQuery extends LambdaDrivenQuery
+class Walk extends LambdaDriven
 {
 	public function execute(array $collection)
 	{

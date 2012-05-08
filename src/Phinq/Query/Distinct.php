@@ -1,8 +1,10 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class DistinctQuery extends ComparableQuery
+use Phinq\Query;
+
+class Distinct extends Comparable
 {
 	public function execute(array $collection)
 	{

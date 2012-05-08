@@ -1,8 +1,10 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class ReverseQuery implements Query
+use Phinq\Query;
+
+class Reverse implements Query
 {
 	public function execute(array $collection)
 	{

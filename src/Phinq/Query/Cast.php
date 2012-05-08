@@ -1,13 +1,14 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
+use Phinq\Query;
 use \InvalidArgumentException;
 
 /**
  * 
  */
-class CastQuery implements Query 
+class Cast implements Query 
 {
 	private $caster;
 

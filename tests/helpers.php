@@ -2,9 +2,8 @@
 
 namespace Phinq\Tests;
 
-use Phinq\EqualityComparer;
 
-class IdComparer implements EqualityComparer
+class IdComparer implements \Phinq\EqualityComparer
 {
 	public function equals($a, $b)
 	{

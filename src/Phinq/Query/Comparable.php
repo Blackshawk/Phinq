@@ -1,11 +1,16 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
+
+use Phinq\Comparer;
+use Phinq\DefaultEqualityComparer;
+use Phinq\EqualityComparer;
+use Phinq\Query;
 
 /**
  * 
  */
-abstract class ComparableQuery implements Query, Comparer
+abstract class Comparable implements Query, Comparer
 {
 	/**
 	 * 

@@ -1,13 +1,14 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
 use Closure;
+use Phinq\Query;
 
 /**
  * 
  */
-abstract class LambdaDrivenQuery implements Query, LambdaDriven
+abstract class LambdaDriven implements Query, \Phinq\LambdaDriven
 {
 	protected $lambda;
 

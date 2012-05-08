@@ -1,8 +1,8 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class SkipWhileQuery extends LambdaDrivenQuery
+class SkipWhile extends LambdaDriven
 {
 	public function execute(array $collection)
 	{

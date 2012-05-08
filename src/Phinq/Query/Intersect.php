@@ -1,11 +1,13 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
+
+use Phinq\EqualityComparer;
 
 /**
  * 
  */
-class IntersectQuery extends ComparableQuery
+class Intersect extends Comparable
 {
 	/**
 	 * Values of the intersection collection.

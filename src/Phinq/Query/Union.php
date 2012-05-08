@@ -1,8 +1,10 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class UnionQuery extends ComparableQuery
+use Phinq\EqualityComparer;
+
+class Union extends Comparable
 {
 
 	protected $additionalCollection;

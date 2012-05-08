@@ -1,8 +1,10 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class ExceptQuery extends ComparableQuery
+use Phinq\EqualityComparer;
+
+class Except extends Comparable
 {
 	/**
 	 * The collection to except.

@@ -1,11 +1,13 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
+
+use Phinq\Query;
 
 /**
  * A query that will return elements within a provided range of integers.
  */
-class BetweenQuery implements Query
+class Between implements Query
 {
 	protected $lowerBound;
 	protected $upperBound;

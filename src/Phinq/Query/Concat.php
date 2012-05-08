@@ -1,8 +1,10 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class ConcatQuery implements Query
+use Phinq\Query;
+
+class Concat implements Query
 {
 	/**
 	 * 

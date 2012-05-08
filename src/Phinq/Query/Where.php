@@ -1,8 +1,8 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class WhereQuery extends LambdaDrivenQuery
+class Where extends LambdaDriven
 {
 	public function execute(array $collection)
 	{

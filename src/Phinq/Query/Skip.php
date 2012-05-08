@@ -1,10 +1,11 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-use InvalidArgumentException, OutOfBoundsException;
+use InvalidArgumentException;
+use Phinq\Query;
 
-class TakeQuery implements Query
+class Skip implements Query
 {
 	protected $amount;
 
@@ -13,16 +14,16 @@ class TakeQuery implements Query
 		if (!is_int($amount)) {
 			throw new InvalidArgumentException('1st argument must be an integer');
 		}
-		
+			
 		if ($amount < 0) {
-			throw new OutOfBoundsException('Take amount must be greater than or equal to zero');
+			$amount--;
 		}
-
+			
 		$this->amount = $amount;
 	}
 
 	public function execute(array $collection)
 	{
-		return array_slice($collection, 0, $this->amount);
+		return array_slice($collection, $this->amount);
 	}
 }

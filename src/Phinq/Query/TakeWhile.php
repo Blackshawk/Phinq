@@ -1,8 +1,8 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
-class TakeWhileQuery extends LambdaDrivenQuery
+class TakeWhile extends LambdaDriven
 {
 	public function execute(array $collection)
 	{

@@ -158,7 +158,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function where(Closure $predicate)
 	{
-		$this->addToQueue(new WhereQuery($predicate));
+		$this->addToQueue(new Query\Where($predicate));
 		return $this->getThisOrCastDown();
 	}
 
@@ -174,7 +174,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function orderBy(Closure $lambda, $descending = false)
 	{
-		$this->addToQueue(new OrderByQuery($lambda, (bool)$descending));
+		$this->addToQueue(new Query\OrderBy($lambda, (bool)$descending));
 		return new OrderedPhinq($this->collection, $this->queryQueue);
 	}
 
@@ -189,7 +189,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function select(Closure $lambda)
 	{
-		$this->addToQueue(new SelectQuery($lambda));
+		$this->addToQueue(new Query\Select($lambda));
 		return $this->getThisOrCastDown();
 	}
 
@@ -202,7 +202,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function union(array $collectionToUnion, EqualityComparer $comparer = null)
 	{
-		$this->addToQueue(new UnionQuery($collectionToUnion, $comparer));
+		$this->addToQueue(new Query\Union($collectionToUnion, $comparer));
 		return $this->getThisOrCastDown();
 	}
 
@@ -215,7 +215,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function intersect(array $collectionToIntersect, EqualityComparer $comparer = null)
 	{
-		$this->addToQueue(new IntersectQuery($collectionToIntersect, $comparer));
+		$this->addToQueue(new Query\Intersect($collectionToIntersect, $comparer));
 		return $this->getThisOrCastDown();
 	}
 
@@ -227,7 +227,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function concat(array $collectionToConcat)
 	{
-		$this->addToQueue(new ConcatQuery($collectionToConcat));
+		$this->addToQueue(new Query\Concat($collectionToConcat));
 		return $this->getThisOrCastDown();
 	}
 
@@ -239,7 +239,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function distinct(EqualityComparer $comparer = null)
 	{
-		$this->addToQueue(new DistinctQuery($comparer));
+		$this->addToQueue(new Query\Distinct($comparer));
 		return $this->getThisOrCastDown();
 	}
 
@@ -251,7 +251,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function skip($amount)
 	{
-		$this->addToQueue(new SkipQuery($amount));
+		$this->addToQueue(new Query\Skip($amount));
 		return $this->getThisOrCastDown();
 	}
 
@@ -263,7 +263,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function skipWhile(Closure $predicate)
 	{
-		$this->addToQueue(new SkipWhileQuery($predicate));
+		$this->addToQueue(new Query\SkipWhile($predicate));
 		return $this->getThisOrCastDown();
 	}
 
@@ -275,7 +275,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function take($amount)
 	{
-		$this->addToQueue(new TakeQuery($amount));
+		$this->addToQueue(new Query\Take($amount));
 		return $this->getThisOrCastDown();
 	}
 
@@ -287,7 +287,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function takeWhile(Closure $predicate)
 	{
-		$this->addToQueue(new TakeWhileQuery($predicate));
+		$this->addToQueue(new Query\TakeWhile($predicate));
 		return $this->getThisOrCastDown();
 	}
 
@@ -467,7 +467,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function groupBy(Closure $lambda)
 	{
-		$this->addToQueue(new GroupByQuery($lambda));
+		$this->addToQueue(new Query\GroupBy($lambda));
 		return $this->getThisOrCastDown();
 	}
 
@@ -570,7 +570,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function reverse()
 	{
-		$this->addToQueue(new ReverseQuery());
+		$this->addToQueue(new Query\Reverse());
 		return $this->getThisOrCastDown();
 	}
 
@@ -669,7 +669,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function except(array $collectionToExcept, EqualityComparer $comparer = null)
 	{
-		$this->addToQueue(new ExceptQuery($collectionToExcept, $comparer));
+		$this->addToQueue(new Query\Except($collectionToExcept, $comparer));
 		return $this->getThisOrCastDown();
 	}
 
@@ -683,7 +683,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function selectMany(Closure $lambda)
 	{
-		$this->addToQueue(new SelectManyQuery($lambda));
+		$this->addToQueue(new Query\SelectMany($lambda));
 		return $this->getThisOrCastDown();
 	}
 
@@ -726,7 +726,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function join(array $collectionToJoinOn, Closure $innerKeySelector, Closure $outerKeySelector, Closure $resultSelector, EqualityComparer $comparer = null)
 	{
-		$this->addToQueue(new JoinQuery($collectionToJoinOn, $innerKeySelector, $outerKeySelector, $resultSelector, $comparer));
+		$this->addToQueue(new Query\Join($collectionToJoinOn, $innerKeySelector, $outerKeySelector, $resultSelector, $comparer));
 		return $this->getThisOrCastDown();
 	}
 
@@ -742,7 +742,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function groupJoin(array $collectionToJoinOn, Closure $innerKeySelector, Closure $outerKeySelector, Closure $resultSelector, EqualityComparer $comparer = null)
 	{
-		$this->addToQueue(new GroupJoinQuery($collectionToJoinOn, $innerKeySelector, $outerKeySelector, $resultSelector, $comparer));
+		$this->addToQueue(new Query\GroupJoin($collectionToJoinOn, $innerKeySelector, $outerKeySelector, $resultSelector, $comparer));
 		return $this->getThisOrCastDown();
 	}
 
@@ -762,7 +762,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function cast($type)
 	{
-		$this->addToQueue(new CastQuery($type));
+		$this->addToQueue(new Query\Cast($type));
 		return $this->getThisOrCastDown();
 	}
 
@@ -777,7 +777,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function ofType($type)
 	{
-		$this->addToQueue(new OfTypeQuery($type));
+		$this->addToQueue(new Query\OfType($type));
 		return $this->getThisOrCastDown();
 	}
 
@@ -790,7 +790,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function defaultIfEmpty($defaultValue = null)
 	{
-		$this->addToQueue(new DefaultIfEmptyQuery($defaultValue));
+		$this->addToQueue(new Query\DefaultIfEmpty($defaultValue));
 		return $this->getThisOrCastDown();
 	}
 
@@ -803,7 +803,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function zip(array $collectionToMerge, Closure $resultSelector)
 	{
-		$this->addToQueue(new ZipQuery($collectionToMerge, $resultSelector));
+		$this->addToQueue(new Query\Zip($collectionToMerge, $resultSelector));
 		return $this->getThisOrCastDown();
 	}
 	
@@ -815,7 +815,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function between($lowerBound, $upperBound)
 	{
-		$this->addToQueue(new BetweenQuery($lowerBound, $upperBound));
+		$this->addToQueue(new Query\Between($lowerBound, $upperBound));
 		return $this->getThisOrCastDown();
 	}
 	
@@ -826,7 +826,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function random($randomElementsCount = 1)
 	{
-		$this->addToQueue(new RandomQuery($randomElementsCount));
+		$this->addToQueue(new Query\Random($randomElementsCount));
 		return $this->getThisOrCastDown();
 	}
 
@@ -840,7 +840,7 @@ class Phinq implements IteratorAggregate
 	 */
 	public function walk(Closure $lambda)
 	{
-		$this->addToQueue(new WalkQuery($lambda));
+		$this->addToQueue(new Query\Walk($lambda));
 		return $this->getThisOrCastDown();
 	}
 

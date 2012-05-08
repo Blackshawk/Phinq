@@ -1,63 +1,78 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
+use Phinq\EqualityComparer;
 use Closure;
 
-class GroupJoinQuery extends ComparableQuery
+class Join extends Comparable
 {
-
+	/**
+	 * The collection on which to perform the join.
+	 * @var array
+	 */
 	protected $collectionToJoinOn;
+	
+	/**
+	 * A function to determine the inner key to select with.
+	 * @var Closure
+	 */
 	protected $innerKeySelector;
+	
+	/**
+	 * A function to determine the outer key to select with.
+	 * @var Closure
+	 */
 	protected $outerKeySelector;
+	
+	/**
+	 * A function to determine the resulting collection of the join.
+	 * @var Closure
+	 */
 	protected $resultSelector;
-	protected $comparer;
 
+	/**
+	 * Construct a new instance of this object.
+	 * @param array $collectionToJoinOn
+	 * @param Closure $innerKeySelector
+	 * @param Closure $outerKeySelector
+	 * @param Closure $resultSelector
+	 * @param EqualityComparer $comparer
+	 */
 	public function __construct(array $collectionToJoinOn, Closure $innerKeySelector, Closure $outerKeySelector, Closure $resultSelector, EqualityComparer $comparer = null)
 	{
 		parent::__construct($comparer);
-		
 		$this->collectionToJoinOn = $collectionToJoinOn;
 		$this->innerKeySelector = $innerKeySelector;
 		$this->outerKeySelector = $outerKeySelector;
 		$this->resultSelector = $resultSelector;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see Phinq.Query::execute()
+	 */
 	public function execute(array $collection)
 	{
 		$innerKeySelector = $this->innerKeySelector;
 		$outerKeySelector = $this->outerKeySelector;
+		$resultSelector   = $this->resultSelector;
 		$comparer         = $this->getComparer();
 		$outerCount       = count($this->collectionToJoinOn);
 		$outerCollection  = $this->collectionToJoinOn;
-		$dictionary       = new GroupingDictionary();
+		$newCollection    = array();
 
 		array_walk(
 			$collection,
-			function($value, $key) use ($innerKeySelector, $outerKeySelector, $comparer, $outerCount, $outerCollection, &$dictionary) {
+			function($value, $key) use ($innerKeySelector, $outerKeySelector, $resultSelector, $comparer, $outerCount, $outerCollection, &$newCollection) {
 				$innerKey = $innerKeySelector($value);
 				for ($i = 0; $i < $outerCount; $i++) {
 					if ($comparer->equals($innerKey, $outerKeySelector($outerCollection[$i])) === 0) {
-						$dictionary[$value] = $outerCollection[$i];
+						$newCollection[] = $resultSelector($value, $outerCollection[$i]);
 					}
 				}
 			}
 		);
-
-		//there's probably a more efficient way to do this... but does anybody ever actually use GroupJoin()? I mean, come on!
-		$resultSelector = $this->resultSelector;
-		$newCollection = array();
-		foreach ($collection as $value)
-		{
-			if (isset($dictionary[$value]))
-			{
-				$newCollection[] = $resultSelector($value, $dictionary[$value]);
-			}
-			else
-			{
-				$newCollection[] = $resultSelector($value, array());
-			}
-		}
 
 		return $newCollection;
 	}

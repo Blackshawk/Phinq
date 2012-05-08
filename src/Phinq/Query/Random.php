@@ -1,11 +1,13 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
+
+use Phinq\Query;
 
 /**
  * 
  */
-class RandomQuery implements Query
+class Random implements Query
 {
 	protected $randomElementsCount;
 	

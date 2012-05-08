@@ -1,10 +1,10 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
 use Closure;
 
-abstract class OrderedQuery extends LambdaDrivenQuery
+abstract class Ordered extends LambdaDriven
 {
 	private $descending;
 

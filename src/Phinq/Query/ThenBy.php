@@ -1,10 +1,10 @@
 <?php
 
-namespace Phinq;
+namespace Phinq\Query;
 
 use Closure;
 
-class ThenByQuery extends OrderedQuery
+class ThenBy extends Ordered
 {
 	/**
 	 * 
@@ -18,7 +18,7 @@ class ThenByQuery extends OrderedQuery
 	 * @param Closure $lambda
 	 * @param boolean $descending
 	 */
-	public function __construct(OrderedQuery $previousQuery, Closure $lambda, $descending = false)
+	public function __construct(Ordered $previousQuery, Closure $lambda, $descending = false)
 	{
 		parent::__construct($lambda, $descending);
 		$this->previousQuery = $previousQuery;
@@ -34,7 +34,7 @@ class ThenByQuery extends OrderedQuery
 		//need to perform a multisort using callbacks... which PHP can't do natively
 
 		$previousCallback = $this->previousQuery->getSortingCallback();
-		$currentCallback = Util::getDefaultSortCallback($this->getLambdaExpression(), $this->isDescending());
+		$currentCallback = \Phinq\Util::getDefaultSortCallback($this->getLambdaExpression(), $this->isDescending());
 
 		return function($a, $b) use ($previousCallback, $currentCallback) {
 			$previousValue = $previousCallback($a, $b);
