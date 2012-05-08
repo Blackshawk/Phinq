@@ -33,10 +33,21 @@ class Phinq extends PhinqBase implements IteratorAggregate
 			}
 		}
 	}
+	
+	/**
+	 * A short method for quickly constructing the Phinq object without the need for extra typing.
+	 * This method is a clone of the Phinq::create($collection) method.
+	 * @see Phinq::create
+	 * @param array|Phinq|Iterator|IteratorAggregate $collection The initial collection to query on.
+	 * @return \Phinq\Phinq
+	 */
+	public static function _($collection) {
+		return new static($collection);
+	}
 
 	/**
 	 * Convenience factory method for method chaining
-	 *
+	 * @deprecated This method is deprecated in favor of using the Phinq::_($collection) method.
 	 * @param array|Phinq|Iterator|IteratorAggregate $collection The initial collection to query on
 	 * @return Phinq
 	 */
