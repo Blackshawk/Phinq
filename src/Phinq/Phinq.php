@@ -7,7 +7,7 @@ use IteratorAggregate, Closure, OutOfBoundsException, BadMethodCallException, In
 /**
  * A port of .NET's LINQ extension methods
  */
-class Phinq extends PhinqBase implements IteratorAggregate
+class Phinq implements IteratorAggregate
 {
 	protected $collection;
 	protected $evaluatedCollection;
@@ -70,7 +70,8 @@ class Phinq extends PhinqBase implements IteratorAggregate
 	}
 
 	/**
-	 * 
+	 * Executes any queries in the stack and with the option of running a final closure
+	 * similar to a where clause before returning the collection.
 	 * @param Closure $predicate
 	 */
 	protected function getCollection(Closure $predicate = null)
