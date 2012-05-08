@@ -50,6 +50,13 @@ class CoreTests extends \PHPUnit_Framework_TestCase {
 
 		self::assertSame(array(2, 4, 6, 8, 10, 12), $newCollection);
 	}
+	
+	public function testBasicStaticConstructor() {
+		$collection = array(1, 2, 3, 4, 5, 6, 7);
+		$newCollection = Phinq::_($collection);
+		
+		$this->assertInstanceOf('Phinq\Phinq', $newCollection);
+	}
 
 	public function testOrderBy() {
 		$collection = array(5, 1, 3);
