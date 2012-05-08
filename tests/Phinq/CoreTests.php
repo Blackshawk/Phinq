@@ -2,6 +2,8 @@
 
 namespace Phinq\Tests;
 
+use Phinq\OrderByQuery;
+
 use Phinq\Phinq;
 use stdClass;
 
