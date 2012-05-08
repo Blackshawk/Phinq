@@ -791,6 +791,18 @@ class Phinq implements IteratorAggregate
 		$this->addToQueue(new ZipQuery($collectionToMerge, $resultSelector));
 		return $this->getThisOrCastDown();
 	}
+	
+	/**
+	 * Filters the collection to elements that have values within the ranges of the provided lower and upper bounds.
+	 * @param int $lowerBound
+	 * @param int $upperBound
+	 * @return Phinq
+	 */
+	public function between($lowerBound, $upperBound)
+	{
+		$this->addToQueue(new BetweenQuery($lowerBound, $upperBound));
+		return $this->getThisOrCastDown();
+	}
 
 	/**
 	 * Applies a lambda function to each element

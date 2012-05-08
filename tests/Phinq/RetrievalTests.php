@@ -2,6 +2,8 @@
 
 namespace Phinq\Tests;
 
+use Phinq\Util;
+
 use Phinq\Phinq;
 
 class RetrievalTests extends \PHPUnit_Framework_TestCase {
@@ -149,5 +151,10 @@ class RetrievalTests extends \PHPUnit_Framework_TestCase {
 		self::assertSame(1, Phinq::create(array(1, 2, 3, 4, 5, 6))->elementAtOrDefault(-6));
 
 		self::assertNull(Phinq::create(array(1, 2, 3, 4, 5, 6))->elementAtOrDefault(-10));
+	}
+	
+	public function testBetween()
+	{
+		self::assertSame(array(5, 6, 7), Util::nonRecursiveFlatten(Phinq::_(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))->between(5, 7)->toArray()));
 	}
 }
