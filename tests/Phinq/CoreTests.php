@@ -373,6 +373,20 @@ class CoreTests extends \PHPUnit_Framework_TestCase {
 			return $value !== null;
 		}));
 	}
+	
+	public function testNoneWithoutPredicate() {
+		self::assertFalse(Phinq::_(range(1, 6))->none());
+		self::assertTrue(Phinq::_(array())->none());
+	}
+	
+	public function testNoneWithPredicate() {
+		self::assertFalse(Phinq::_(range(1, 6))->none(function($value) {
+			return $value === 3;
+		}));
+		self::assertTrue(Phinq::_(array())->none(function($value) {
+			return $value !== null;
+		}));
+	}
 
 	public function testContainsAndDefaultEqualityComparer() {
 		$obj = new stdClass();

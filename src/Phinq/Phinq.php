@@ -511,6 +511,21 @@ class Phinq implements IteratorAggregate
 
 		return false;
 	}
+	
+	/**
+	 * Verifies that none of the elements in the collection satisfies the given predicate.
+	 * 
+	 * $predicate takes in one argument, the current element, and returns a boolean.
+	 * 
+	 * This method is an alias for !Phinq.any().
+	 * 
+	 * @param Closure $predicate
+	 * @return bool
+	 */
+	public function none(Closure $predicate = null)
+	{
+		return !$this->any($predicate);
+	}
 
 	/**
 	 * Verifies that the collection contains the specified value
