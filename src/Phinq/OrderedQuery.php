@@ -6,7 +6,6 @@ use Closure;
 
 abstract class OrderedQuery extends LambdaDrivenQuery
 {
-
 	private $descending;
 
 	public function __construct(Closure $lambda, $descending = false)
