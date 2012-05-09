@@ -15,7 +15,7 @@ abstract class PhinqBase implements \IteratorAggregate
 	/**
 	 * Construct a new instance of the Phinq object. You must call the create method
 	 * statically to actually initiate this constructor.
-	 * @param array|Phinq|Iterator|IteratorAggregate $collection The initial collection to query on
+	 * @param array|Phinq|\Iterator|\IteratorAggregate $collection The initial collection to query on
 	 */
 	protected function __construct($collection, array $queries = array())
 	{
@@ -102,6 +102,7 @@ abstract class PhinqBase implements \IteratorAggregate
 	
 			foreach($this->queryQueue as $query)
 			{
+				/* @var $query Query */
 				$this->evaluatedCollection = $query->execute($this->evaluatedCollection);
 			}
 		}
