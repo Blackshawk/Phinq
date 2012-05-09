@@ -2,64 +2,23 @@
 
 namespace Phinq;
 
-use IteratorAggregate, Closure, OutOfBoundsException, BadMethodCallException, InvalidArgumentException, ArrayIterator;
+use \IteratorAggregate, 
+	\Closure, 
+	\OutOfBoundsException, 
+	\BadMethodCallException, 
+	\InvalidArgumentException, 
+	\ArrayIterator;
 
 /**
  * A port of .NET's LINQ extension methods
  */
-class Phinq implements IteratorAggregate
+class Phinq extends PhinqBase
 {
-	protected $collection;
-	protected $evaluatedCollection;
-	protected $queryQueue = array();
-	protected $index = 0;
-	protected $isDirty = false;
-
-	/**
-	 * Construct a new instance of the Phinq object. You must call the create method
-	 * statically to actually initiate this constructor. 
-	 * @param array|Phinq|Iterator|IteratorAggregate $collection The initial collection to query on
-	 */
-	protected function __construct($collection, array $queries = array())
-	{
-		$this->collection = Util::convertToNumericallyIndexedArray($collection);
-		$this->evaluatedCollection = $this->collection;
-
-		if(!empty($queries))
-		{
-			foreach($queries as $query)
-			{
-				$this->addToQueue($query);
-			}
-		}
-	}
-	
-	/**
-	 * A short method for quickly constructing the Phinq object without the need for extra typing.
-	 * This method is a clone of the Phinq::create($collection) method.
-	 * @see Phinq::create
-	 * @param array|Phinq|Iterator|IteratorAggregate $collection The initial collection to query on.
-	 * @return \Phinq\Phinq
-	 */
-	public static function _($collection) {
-		return new static($collection);
-	}
-
-	/**
-	 * Convenience factory method for method chaining
-	 * @deprecated This method is deprecated in favor of using the Phinq::_($collection) method.
-	 * @param array|Phinq|Iterator|IteratorAggregate $collection The initial collection to query on
-	 * @return Phinq
-	 */
-	public final static function create($collection) {
-		return new static($collection);
-	}
-
 	/**
 	 * Since PHP doesn't support polymorphism, we have to manhandle a downcast
 	 * @return Phinq
 	 */
-	private function getThisOrCastDown()
+	/*private function getThisOrCastDown()
 	{
 		if (get_class($this) !== __CLASS__)
 		{
@@ -67,84 +26,7 @@ class Phinq implements IteratorAggregate
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Executes any queries in the stack and with the option of running a final closure
-	 * similar to a where clause before returning the collection.
-	 * @param Closure $predicate
-	 */
-	protected function getCollection(Closure $predicate = null)
-	{
-		$collection = $this->toArray();
-
-		if ($predicate !== null) {
-			$collection = self::create($collection)->where($predicate)->toArray();
-		}
-
-		return $collection;
-	}
-
-	/**
-	 * Adds a query to the Phinq query stack.
-	 * @param Query $query
-	 * @return void
-	 */
-	protected final function addToQueue(Query $query)
-	{
-		$this->queryQueue[] = $query;
-		$this->isDirty = true;
-	}
-
-	/**
-	 * 
-	 * @return Ambigous <NULL, mixed>
-	 */
-	protected final function getLastQuery()
-	{
-		return empty($this->queryQueue) ? null : end($this->queryQueue);
-	}
-
-	/**
-	 * Executes any queries in the stack and returns the collection as an array.
-	 * @return array
-	 */
-	public function toArray()
-	{
-		if($this->isDirty || $this->evaluatedCollection === null)
-		{
-			$this->index = 0;
-			$this->isDirty = false;
-			$this->evaluatedCollection = $this->collection;
-			
-			foreach($this->queryQueue as $query)
-			{
-				$this->evaluatedCollection = $query->execute($this->evaluatedCollection);
-			}
-		}
-
-		return $this->evaluatedCollection;
-	}
-
-	/**
-	 * Returns the collection as an ArrayAccess-able object, with the
-	 * keys being chosen using the given $keySelector
-	 *
-	 * @param Closure $keySelector A lambda function that takes one argument, the current element, and
-	 *                             returns a key for the dictionary entry for the corresponding element
-	 * @return Dictionary
-	 */
-	public function toDictionary(Closure $keySelector)
-	{
-		$collection = $this->toArray();
-
-		$dictionary = new Dictionary();
-		for ($i = 0, $count = count($collection); $i < $count; $i++) {
-			$dictionary[$keySelector($collection[$i])] = $collection[$i];
-		}
-
-		return $dictionary;
-	}
+	}*/
 
 	/**
 	 * Filters the collection using the given predicate
@@ -159,7 +41,7 @@ class Phinq implements IteratorAggregate
 	public function where(Closure $predicate)
 	{
 		$this->addToQueue(new Query\Where($predicate));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -190,7 +72,7 @@ class Phinq implements IteratorAggregate
 	public function select(Closure $lambda)
 	{
 		$this->addToQueue(new Query\Select($lambda));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -203,7 +85,7 @@ class Phinq implements IteratorAggregate
 	public function union(array $collectionToUnion, EqualityComparer $comparer = null)
 	{
 		$this->addToQueue(new Query\Union($collectionToUnion, $comparer));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -216,7 +98,7 @@ class Phinq implements IteratorAggregate
 	public function intersect(array $collectionToIntersect, EqualityComparer $comparer = null)
 	{
 		$this->addToQueue(new Query\Intersect($collectionToIntersect, $comparer));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -228,7 +110,7 @@ class Phinq implements IteratorAggregate
 	public function concat(array $collectionToConcat)
 	{
 		$this->addToQueue(new Query\Concat($collectionToConcat));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -240,7 +122,7 @@ class Phinq implements IteratorAggregate
 	public function distinct(EqualityComparer $comparer = null)
 	{
 		$this->addToQueue(new Query\Distinct($comparer));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -252,7 +134,7 @@ class Phinq implements IteratorAggregate
 	public function skip($amount)
 	{
 		$this->addToQueue(new Query\Skip($amount));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -264,7 +146,7 @@ class Phinq implements IteratorAggregate
 	public function skipWhile(Closure $predicate)
 	{
 		$this->addToQueue(new Query\SkipWhile($predicate));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -276,7 +158,7 @@ class Phinq implements IteratorAggregate
 	public function take($amount)
 	{
 		$this->addToQueue(new Query\Take($amount));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -288,7 +170,7 @@ class Phinq implements IteratorAggregate
 	public function takeWhile(Closure $predicate)
 	{
 		$this->addToQueue(new Query\TakeWhile($predicate));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -468,7 +350,7 @@ class Phinq implements IteratorAggregate
 	public function groupBy(Closure $lambda)
 	{
 		$this->addToQueue(new Query\GroupBy($lambda));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -571,7 +453,7 @@ class Phinq implements IteratorAggregate
 	public function reverse()
 	{
 		$this->addToQueue(new Query\Reverse());
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -670,7 +552,7 @@ class Phinq implements IteratorAggregate
 	public function except(array $collectionToExcept, EqualityComparer $comparer = null)
 	{
 		$this->addToQueue(new Query\Except($collectionToExcept, $comparer));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -684,7 +566,7 @@ class Phinq implements IteratorAggregate
 	public function selectMany(Closure $lambda)
 	{
 		$this->addToQueue(new Query\SelectMany($lambda));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -727,7 +609,7 @@ class Phinq implements IteratorAggregate
 	public function join(array $collectionToJoinOn, Closure $innerKeySelector, Closure $outerKeySelector, Closure $resultSelector, EqualityComparer $comparer = null)
 	{
 		$this->addToQueue(new Query\Join($collectionToJoinOn, $innerKeySelector, $outerKeySelector, $resultSelector, $comparer));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -743,7 +625,7 @@ class Phinq implements IteratorAggregate
 	public function groupJoin(array $collectionToJoinOn, Closure $innerKeySelector, Closure $outerKeySelector, Closure $resultSelector, EqualityComparer $comparer = null)
 	{
 		$this->addToQueue(new Query\GroupJoin($collectionToJoinOn, $innerKeySelector, $outerKeySelector, $resultSelector, $comparer));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -763,7 +645,7 @@ class Phinq implements IteratorAggregate
 	public function cast($type)
 	{
 		$this->addToQueue(new Query\Cast($type));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -778,7 +660,7 @@ class Phinq implements IteratorAggregate
 	public function ofType($type)
 	{
 		$this->addToQueue(new Query\OfType($type));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -791,7 +673,7 @@ class Phinq implements IteratorAggregate
 	public function defaultIfEmpty($defaultValue = null)
 	{
 		$this->addToQueue(new Query\DefaultIfEmpty($defaultValue));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -804,7 +686,7 @@ class Phinq implements IteratorAggregate
 	public function zip(array $collectionToMerge, Closure $resultSelector)
 	{
 		$this->addToQueue(new Query\Zip($collectionToMerge, $resultSelector));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 	
 	/**
@@ -816,7 +698,7 @@ class Phinq implements IteratorAggregate
 	public function between($lowerBound, $upperBound)
 	{
 		$this->addToQueue(new Query\Between($lowerBound, $upperBound));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 	
 	/**
@@ -827,7 +709,7 @@ class Phinq implements IteratorAggregate
 	public function random($randomElementsCount = 1)
 	{
 		$this->addToQueue(new Query\Random($randomElementsCount));
-		return $this->getThisOrCastDown();
+		return $this;
 	}
 
 	/**
@@ -841,15 +723,6 @@ class Phinq implements IteratorAggregate
 	public function walk(Closure $lambda)
 	{
 		$this->addToQueue(new Query\Walk($lambda));
-		return $this->getThisOrCastDown();
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see IteratorAggregate::getIterator()
-	 */
-	public function getIterator()
-	{
-		return new ArrayIterator($this->toArray());
+		return $this;
 	}
 }

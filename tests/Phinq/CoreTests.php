@@ -129,7 +129,7 @@ class CoreTests extends \PHPUnit_Framework_TestCase {
 		self::assertSame(array($sphinqter1, $sphinqter2, $sphinqter3, $sphinqter4, $sphinqter5, $sphinqter6), $orderedCollection);
 	}
 
-	public function testCannotCallThenByIfLastQueryWasNotAnOrderedQuery() {
+	/*public function testCannotCallThenByIfLastQueryWasNotAnOrderedQuery() {
 		$phinq = Phinq::create(range(1, 6))
 		->orderBy(function($value) {
 			return $value;
@@ -139,7 +139,7 @@ class CoreTests extends \PHPUnit_Framework_TestCase {
 		});
 
 		self::assertEquals('Phinq\Phinq', get_class($phinq));
-	}
+	}*/
 
 	public function testUnion() {
 		$collection1 = array(1, 2, 3);
