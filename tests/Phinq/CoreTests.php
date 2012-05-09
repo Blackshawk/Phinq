@@ -404,10 +404,6 @@ class CoreTests extends \PHPUnit_Framework_TestCase {
 		$this->assertCount(1, $result1);
 		$this->assertCount(3, $result3);
 	}
-	
-	/* public function testRandomWithKeys() {
-		
-	} */
 
 	public function testContainsAndDefaultEqualityComparer() {
 		$obj = new stdClass();
