@@ -15,20 +15,6 @@ use \IteratorAggregate,
 class Phinq extends PhinqBase
 {
 	/**
-	 * Since PHP doesn't support polymorphism, we have to manhandle a downcast
-	 * @return Phinq
-	 */
-	/*private function getThisOrCastDown()
-	{
-		if (get_class($this) !== __CLASS__)
-		{
-			return new self($this->collection, $this->queryQueue);
-		}
-
-		return $this;
-	}*/
-
-	/**
 	 * Filters the collection using the given predicate
 	 *
 	 * The lambda expression takes one argument, the value of the current collection member,
@@ -52,7 +38,7 @@ class Phinq extends PhinqBase
 	 *
 	 * @param Closure $lambda
 	 * @param bool $descending If true, the collection will be reversed
-	 * @return OrderedPhinq
+	 * @return \Phinq\OrderedPhinq
 	 */
 	public function orderBy(Closure $lambda, $descending = false)
 	{
@@ -725,4 +711,37 @@ class Phinq extends PhinqBase
 		$this->addToQueue(new Query\Walk($lambda));
 		return $this;
 	}
+	
+	public function add($numberOrCollection)
+	{
+		$this->addToQueue(new Query\Math\Standard\Add($numberOrCollection));
+		return $this;
+	}
+	
+	/**
+	 * 
+	 * @param array $collection
+	 */
+	public function subtract($numberOrCollection)
+	{
+		$this->addToQueue(new Query\Math\Standard\Subtract($numberOrCollection));
+		return $this;
+	}
+	
+	/**
+	 * 
+	 * @param array $collection
+	 */
+	public function multiply($numberOrCollection)
+	{
+		$this->addToQueue(new Query\Math\Standard\Multiply($numberOrCollection));
+		return $this;
+	}
+	
+	public function divide($numberOrCollection)
+	{
+		$this->addToQueue(new Query\Math\Standard\Divide($numberOrCollection));
+		return $this;
+	}
+	
 }
