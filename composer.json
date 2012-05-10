@@ -20,6 +20,8 @@
 			"phinq": "src"
 		}
 	},
+	
+	"keywords": ["linq", "query", "statistic", "phinq"],
 
-	"description": "A library for providing querying and updating data in an object-oriented fashion."
+	"description": "A library for querying data and performing statistical operations in an logical, object-oriented fashion."
 }
