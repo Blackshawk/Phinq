@@ -6,10 +6,29 @@ use IteratorAggregate, Closure, OutOfBoundsException, BadMethodCallException, In
 
 abstract class PhinqBase implements \IteratorAggregate
 {
+	/**
+	 * The original collection used to create the Phinq object. All operations are performed on this collection.
+	 * @var array|Phinq|\Iterator|\IteratorAggregate
+	 */
 	protected $collection;
+	
+	/**
+	 * This is a copy of the original collection, and all queries are run against this. Each query in the
+	 * stack is provided with the latest version of the evaluated collection.
+	 * @var array|Phinq|\Iterator|\IteratorAggregate
+	 */
 	protected $evaluatedCollection;
+	
+	/**
+	 * A stack of queries to run against the collection. 
+	 * @var array
+	 */
 	protected $queryQueue = array();
-	protected $index = 0;
+	
+	/**
+	 * Marks whether or not the collection still has unfinished queries to execute.
+	 * @var boolean
+	 */
 	protected $isDirty = false;
 	
 	/**
@@ -96,7 +115,6 @@ abstract class PhinqBase implements \IteratorAggregate
 	{
 		if($this->isDirty || $this->evaluatedCollection === null)
 		{
-			$this->index = 0;
 			$this->isDirty = false;
 			$this->evaluatedCollection = $this->collection;
 	
