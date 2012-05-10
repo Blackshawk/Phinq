@@ -40,8 +40,10 @@ class Phinq extends PhinqBase
 	 * @param bool $descending If true, the collection will be reversed
 	 * @return \Phinq\OrderedPhinq
 	 */
-	public function orderBy(Closure $lambda, $descending = false)
+	public function orderBy(Closure $lambda = null, $descending = false)
 	{
+		$lambda = $lambda ?: function($value) { return $value; };
+		
 		$this->addToQueue(new Query\OrderBy($lambda, (bool)$descending));
 		return new OrderedPhinq($this->collection, $this->queryQueue);
 	}

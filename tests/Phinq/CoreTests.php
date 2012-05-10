@@ -70,6 +70,16 @@ class CoreTests extends \PHPUnit_Framework_TestCase {
 
 		self::assertSame(array(1, 3, 5), $orderedCollection);
 	}
+	
+	public function testOrderByWithNoLambda() {
+		$collection = array(5, 1, 3);
+		$orderedCollection = Phinq::_($collection)
+		->orderBy()
+		->toArray();
+		
+		self::assertSame(array(1, 3, 5), $orderedCollection);
+		
+	}
 
 	public function testOrderByDescending() {
 		$collection = array(5, 1, 3);
