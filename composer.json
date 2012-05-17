@@ -4,6 +4,7 @@
 	"require": {
         	"php": ">=5.3.0"
 	},
+	"license": "MIT",
 	"homepage": "https://github.com/Blackshawk/phinq",
 	"authors": [
 		{
@@ -16,9 +17,7 @@
 	],
 
 	"autoload": {
-		"psr-0": {
-			"phinq": "src"
-		}
+		"psr-0": { "Phinq": "src" }
 	},
 	
 	"keywords": ["linq", "query", "statistic", "phinq"],
