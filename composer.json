@@ -1,5 +1,5 @@
 {
-	"name": "Blackshawk/Phinq",
+	"name": "phinq/phinq",
 	"type": "library",
 	"require": {
         	"php": ">=5.3.0"
