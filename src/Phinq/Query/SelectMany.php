@@ -10,7 +10,7 @@ class SelectMany extends LambdaDriven
 		$lambda = $this->getLambdaExpression();
 
 		array_walk($collection, function($value, $key) use (&$flattenedCollection, $lambda) {
-			$flattenedCollection = array_merge($flattenedCollection, \Phinq\Util::nonRecursiveFlatten($lambda($value)));
+			$flattenedCollection = array_merge($flattenedCollection, array_values($lambda($value)));
 		});
 
 		return $flattenedCollection;

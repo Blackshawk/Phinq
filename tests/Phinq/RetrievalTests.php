@@ -155,6 +155,6 @@ class RetrievalTests extends \PHPUnit_Framework_TestCase {
 	
 	public function testBetween()
 	{
-		self::assertSame(array(5, 6, 7), Util::nonRecursiveFlatten(Phinq::_(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))->between(5, 7)->toArray()));
+		self::assertSame(array(5, 6, 7), array_values(Phinq::_(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))->between(5, 7)->toArray()));
 	}
 }
